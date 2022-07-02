@@ -109,6 +109,7 @@
       <el-select-menu
         ref="popper"
         :append-to-body="popperAppendToBody"
+        :width-limit="widthLimit"
         v-show="visible && emptyText !== false">
         <el-scrollbar
           tag="ul"
@@ -286,6 +287,7 @@
       remoteMethod: Function,
       filterMethod: Function,
       multiple: Boolean,
+      widthLimit: Boolean,
       multipleLimit: {
         type: Number,
         default: 0

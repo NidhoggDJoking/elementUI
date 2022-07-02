@@ -8,7 +8,7 @@
 :::demo `v-model`的值为当前被选中的`el-option`的 value 属性值
 ```html
 <template>
-  <el-select v-model="value" placeholder="请选择">
+  <el-select v-model="value" placeholder="请选择" :width-limit="true">
     <el-option
       v-for="item in options"
       :key="item.value"
@@ -37,6 +37,9 @@
         }, {
           value: '选项5',
           label: '北京烤鸭'
+        }, {
+          value: '选项6',
+          label: '西兰花胡萝卜蘑菇洋葱虾仁火腿黑豆饭'
         }],
         value: ''
       }
@@ -515,6 +518,102 @@
 ```
 :::
 
+### 树形下拉
+
+可以满足产品的脑残设计
+
+:::demo 树形下拉
+```html
+<template>
+  <div class="app-container">
+    <el-select class="main-select-tree" ref="selectTree" v-model="value" :width-limit="true">
+      <el-option v-for="item in formatData(datas)" :key="item.value" :label="item.label" :value="item.value" style="display: none;" />
+      <el-tree class="main-select-el-tree" ref="selecteltree"
+        :data="datas"
+        node-key="id"
+        highlight-current
+        :props="defaultProps"
+        @node-click="handleNodeClick"
+        :current-node-key="value"
+        :expand-on-click-node="expandOnClickNode"
+        default-expand-all />
+    </el-select>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      value: 6,
+      expandOnClickNode: true,
+      options:[],
+      datas: [{
+        id: 1,
+        label: '湖南',
+        children: [{
+          id: 2,
+          label: '长沙',
+          children: [
+            {id: 3,label: '岳麓区',children:[{id: 9,label: '麓谷大道'}]},
+            {id: 4,label: '望城区'}
+          ]
+        }]
+      }, {
+        id: 5,
+        label: '郴州',
+        children: [
+          {id: 6,label: '北湖区'},
+          {id: 7,label: '苏仙区'},
+          {id: 8,label: '长度溢出长度溢出长度溢出长度溢出长度溢出---'}
+        ]
+      }],
+      defaultProps: {
+        children: 'children',
+        label: 'label'
+      }
+    }
+  },
+  methods: {
+    // 四级菜单
+    formatData(data){
+      let options = [];
+      data.forEach((item,key) => {
+        options.push({label:item.label,value:item.id});
+        if(item.children){
+          item.children.forEach((items,keys) => {
+            options.push({label:items.label,value:items.id});
+            if(items.children){
+              items.children.forEach((itemss,keyss) => {
+                options.push({label:itemss.label,value:itemss.id});
+                if(itemss.children){
+                  itemss.children.forEach((itemsss,keysss) => {
+                    options.push({label:itemsss.label,value:itemsss.id});
+                  });
+                }
+              });
+            }
+          });
+        }
+      });
+      return options;
+    },
+    handleNodeClick(node){
+      this.value = node.id;
+      this.$refs.selectTree.blur();
+    }
+  }
+}
+</script>
+<style>
+.main-select-el-tree .el-tree-node .is-current > .el-tree-node__content{font-weight: bold; color: #409eff;}
+.main-select-el-tree .el-tree-node.is-current > .el-tree-node__content{font-weight: bold; color: #409eff;}
+.main-select-el-tree .el-tree-node.is-current > .el-tree-node__content{font-weight: bold; color: #409eff;}
+</style>
+
+```
+:::
+
 :::tip
 如果 Select 的绑定值为对象类型，请务必指定 `value-key` 作为它的唯一性标识。
 :::
@@ -548,6 +647,7 @@
 | default-first-option | 在输入框按下回车，选择第一个匹配项。需配合 `filterable` 或 `remote` 使用 | boolean | - | false |
 | popper-append-to-body | 是否将弹出框插入至 body 元素。在弹出框的定位出现问题时，可将该属性设置为 false | boolean | - | true |
 | automatic-dropdown | 对于不可搜索的 Select，是否在输入框获得焦点后自动弹出选项菜单 | boolean | - | false |
+| width-limit | 弹出框的宽度限制 为 `true` 时宽度与下拉框也一致 | boolean | - | false |
 
 ### Select Events
 | 事件名称 | 说明 | 回调参数 |

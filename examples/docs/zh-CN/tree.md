@@ -792,6 +792,69 @@
 ```
 :::
 
+
+### 溢出处理
+
+
+:::demo
+```html
+<el-tree :data="data" :props="defaultProps" @node-click="handleNodeClick"></el-tree>
+
+<script>
+  export default {
+    data() {
+      return {
+        data: [{
+          label: '一级 1-溢出处理',
+          children: [{
+            label: '二级 1-1-溢出处理',
+            children: [{
+              label: '三级 1-1-1-溢出处理'
+            }]
+          }]
+        }, {
+          label: '一级 2-溢出处理',
+          children: [{
+            label: '二级 2-1-溢出处理',
+            children: [{
+              label: '三级 2-1-1-溢出处理'
+            }]
+          }, {
+            label: '二级 2-2-溢出处理',
+            children: [{
+              label: '三级 2-2-1-溢出处理'
+            }]
+          }]
+        }, {
+          label: '一级 3-溢出处理',
+          children: [{
+            label: '二级 3-1-溢出处理',
+            children: [{
+              label: '三级 3-1-1-溢出处理'
+            }]
+          }, {
+            label: '二级 3-2-溢出处理',
+            children: [{
+              label: '三级 3-2-1-溢出处理'
+            }]
+          }]
+        }],
+        defaultProps: {
+          children: 'children',
+          label: 'label'
+        }
+      };
+    },
+    methods: {
+      handleNodeClick(data) {
+        console.log(data);
+      }
+    }
+  };
+</script>
+```
+:::
+
 ### Attributes
 | 参数                  | 说明                                               | 类型                        | 可选值  | 默认值   |
 | --------------------- | ---------------------------------------- | --------------------------- | ---- | ----- |
