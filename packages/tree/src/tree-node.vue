@@ -116,6 +116,7 @@ export default {
         }
       },
       render(h) {
+        // const width = this.maxWidth
         const parent = this.$parent;
         const tree = parent.tree;
         const node = this.node;
@@ -125,18 +126,19 @@ export default {
             ? parent.renderContent.call(parent._renderProxy, h, { _self: tree.$vnode.context, node, data, store })
             : tree.$scopedSlots.default
               ? tree.$scopedSlots.default({ node, data })
-              // : <span class="el-tree-node__label">{ node.label }</span>
-              : h(
-                  'span',
-                  {
-                    class: 'el-tree-node__label',
-                    style: {
-                      '--el-tree-node__level': `${node.level - 1}`,
-                      '--el-tree-node__indent': `${tree.indent}px`
-                    }
-                  },
-                  `${node.label}`
-                )
+              : <span class="el-tree-node__label">{ node.label }</span>
+              // : h(
+              //     'span',
+              //     {
+              //       class: 'el-tree-node__label',
+              //       style: {
+              //         '--el-tree-node__width': `${width}`,
+              //         '--el-tree-node__level': `${node.level - 1}`,
+              //         '--el-tree-node__indent': `${tree.indent}px`
+              //       }
+              //     },
+              //     `${node.label}`
+              //   )
         );
       }
     }
@@ -148,7 +150,8 @@ export default {
       expanded: false,
       childNodeRendered: false,
       oldChecked: null,
-      oldIndeterminate: null
+      oldIndeterminate: null,
+      maxWidth: ''
     };
   },
 
@@ -166,7 +169,10 @@ export default {
       if (val) {
         this.childNodeRendered = true;
       }
-    }
+    },
+    // '$parent.$el.clientWidth'(){
+    //   this.maxWidth = this.$parent.$el.getBoundingClientRect().width + 'px';
+    // }
   },
 
   methods: {
@@ -294,10 +300,10 @@ export default {
 </script>
 <style lang="scss">
 .el-tree-node__label {
-  $width: 100px;
-  $level: var(--el-tree-node__level);
-  $indent : calc(var(--el-tree-node__level) * var(--el-tree-node__indent));
-  max-width: calc(#{$width} - #{$indent});
+  // $width: var(--el-tree-node__width);
+  // $level: var(--el-tree-node__level);
+  // $indent : calc(var(--el-tree-node__level) * var(--el-tree-node__indent));
+  // max-width: calc(#{$width} - #{$indent});
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

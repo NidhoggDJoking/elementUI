@@ -191,7 +191,7 @@
 :::demo 为`el-select`设置`multiple`属性即可启用多选，此时`v-model`的值为当前选中值所组成的数组。默认情况下选中值会以 Tag 的形式展现，你也可以设置`collapse-tags`属性将它们合并为一段文字。
 ```html
 <template>
-  <el-select v-model="value1" multiple placeholder="请选择">
+  <el-select v-model="value1" multiple placeholder="请选择" :width-limit="true">
     <el-option
       v-for="item in options"
       :key="item.value"
@@ -251,7 +251,7 @@
 :::demo 将自定义的 HTML 模板插入`el-option`的 slot 中即可。
 ```html
 <template>
-  <el-select v-model="value" placeholder="请选择">
+  <el-select v-model="value" placeholder="请选择" :width-limit="true">
     <el-option
       v-for="item in cities"
       :key="item.value"
@@ -285,6 +285,9 @@
         }, {
           value: 'Guangzhou',
           label: '广州'
+        },{
+          value: 'Xinjiang',
+          label: '新疆维吾尔自治区'
         }],
         value: ''
       }
@@ -301,7 +304,7 @@
 :::demo 使用`el-option-group`对备选项进行分组，它的`label`属性为分组名
 ```html
 <template>
-  <el-select v-model="value" placeholder="请选择">
+  <el-select v-model="value" placeholder="请选择" :width-limit="true">
     <el-option-group
       v-for="group in options"
       :key="group.label"
