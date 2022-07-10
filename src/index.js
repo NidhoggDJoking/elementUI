@@ -40,6 +40,7 @@ import Tabs from '../packages/tabs/index.js';
 import TabPane from '../packages/tab-pane/index.js';
 import Tag from '../packages/tag/index.js';
 import Tree from '../packages/tree/index.js';
+import TreeTransfer from '../packages/tree-transfer/index.js';
 import Alert from '../packages/alert/index.js';
 import Notification from '../packages/notification/index.js';
 import Slider from '../packages/slider/index.js';
@@ -131,6 +132,7 @@ const components = [
   TabPane,
   Tag,
   Tree,
+  TreeTransfer,
   Alert,
   Slider,
   Icon,
@@ -256,6 +258,7 @@ export default {
   TabPane,
   Tag,
   Tree,
+  TreeTransfer,
   Alert,
   Notification,
   Slider,

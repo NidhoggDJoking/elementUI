@@ -208,6 +208,59 @@
 ```
 :::
 
+### 树形穿梭框
+
+树形结构的穿梭框，此为作者新写组件所以其属性可能与以上穿梭框存在差异
+
+:::demo `Element`依赖中不存在 `el-tree-transfer`组件，要使用需自行转移至项目中
+```html
+<template>
+  <div>
+    <el-tree-transfer
+      v-model="value"
+      :data="data"
+      filterable>
+    </el-tree-transfer>
+  </div>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        value: [],
+        data: [
+          {
+            key: 1,
+            label: "一级 1",
+            disabled: false,
+            children: [
+              {
+                key: 11,
+                label: "二级 1-1",
+                disabled: false,
+                children: [
+                  { key: 111, label: "三级 1-1-1", disabled: false },
+                  { key: 112, label: "三级 1-1-2", disabled: false },
+                  { key: 113, label: "三级 1-1-3", disabled: false },
+                ],
+              },
+              { key: 12, label: "二级 1-2", disabled: false },
+              { key: 13, label: "二级 1-3", disabled: false },
+            ],
+          },
+          { key: 2, label: "一级 2", disabled: false },
+          { key: 3, label: "一级 3", disabled: false },
+          { key: 4, label: "一级 4", disabled: false },
+          { key: 5, label: "一级 5", disabled: false },
+        ],
+      };
+    },
+  };
+</script>
+```
+:::
+
 ### Attributes
 | 参数      | 说明    | 类型      | 可选值       | 默认值   |
 |---------- |-------- |---------- |-------------  |-------- |
