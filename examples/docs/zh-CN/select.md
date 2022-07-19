@@ -617,6 +617,110 @@ export default {
 ```
 :::
 
+
+### 树形下拉
+
+可以满足产品的脑残设计
+
+:::demo 树形下拉
+```html
+<template>
+  <div class="app-container">
+    <el-select class="main-select-tree" ref="selectTree" multiple  v-model="value" :width-limit="true">
+      <el-option v-for="item in formatData(datas)" :key="item.value" :label="item.label" :value="item.value" style="display: none;" />
+      <el-tree class="main-select-el-tree" ref="selecteltree"
+        show-checkbox
+        :data="datas"
+        node-key="id"
+        highlight-current
+        :props="defaultProps"
+        @check="handleCheck"
+        :expand-on-click-node="expandOnClickNode"
+        default-expand-all />
+    </el-select>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      value: [6],
+      expandOnClickNode: true,
+      options:[],
+      datas: [{
+        id: 1,
+        label: '湖南',
+        children: [{
+          id: 2,
+          label: '长沙',
+          children: [
+            {id: 3,label: '岳麓区',children:[{id: 9,label: '麓谷大道'}]},
+            {id: 4,label: '望城区'}
+          ]
+        }]
+      }, {
+        id: 5,
+        label: '郴州',
+        children: [
+          {id: 6,label: '北湖区'},
+          {id: 7,label: '苏仙区'},
+          {id: 8,label: '长度溢出长度溢出长度溢出长度溢出长度溢出---'}
+        ]
+      }],
+      defaultProps: {
+        children: 'children',
+        label: 'label'
+      }
+    }
+  },
+  mounted(){
+     this.$refs.selecteltree.setCheckedKeys([3]);
+  },
+  methods: {
+    // 四级菜单
+    formatData(data){
+      let options = [];
+      data.forEach((item,key) => {
+        options.push({label:item.label,value:item.id});
+        if(item.children){
+          item.children.forEach((items,keys) => {
+            options.push({label:items.label,value:items.id});
+            if(items.children){
+              items.children.forEach((itemss,keyss) => {
+                options.push({label:itemss.label,value:itemss.id});
+                if(itemss.children){
+                  itemss.children.forEach((itemsss,keysss) => {
+                    options.push({label:itemsss.label,value:itemsss.id});
+                  });
+                }
+              });
+            }
+          });
+        }
+      });
+      return options;
+    },
+    handleNodeClick(node){
+      // this.value = node.id;
+      // this.$refs.selectTree.blur();
+    },
+    handleCheck(data,data2){
+      console.log(data, data2);
+      this.value = data2.checkedKeys
+    }
+  }
+}
+</script>
+<style>
+.main-select-el-tree .el-tree-node .is-current > .el-tree-node__content{font-weight: bold; color: #409eff;}
+.main-select-el-tree .el-tree-node.is-current > .el-tree-node__content{font-weight: bold; color: #409eff;}
+.main-select-el-tree .el-tree-node.is-current > .el-tree-node__content{font-weight: bold; color: #409eff;}
+</style>
+
+```
+:::
+
 :::tip
 如果 Select 的绑定值为对象类型，请务必指定 `value-key` 作为它的唯一性标识。
 :::
