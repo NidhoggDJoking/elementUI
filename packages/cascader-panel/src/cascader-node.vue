@@ -92,10 +92,11 @@
       },
 
       renderPrefix(h) {
-        const { isLeaf, isChecked, config } = this;
-        const { checkStrictly, multiple } = config;
-
-        if (multiple) {
+        // 多选模式下指定层级不展示按钮
+        const { isLeaf, isChecked, config, node } = this;
+        const { checkStrictly, multiple, hiddenSelector = [] } = config;
+        const { level } = node;
+        if (multiple && !hiddenSelector.includes(level)) {
           return this.renderCheckbox(h);
         } else if (checkStrictly) {
           return this.renderRadio(h);
