@@ -73,13 +73,13 @@
           panel.handleExpand(node);
         }
       },
-
+      // 单选情况下对应节点的值发生改变
       handleCheckChange() {
         const { panel, value, node } = this;
         panel.handleCheckChange(value);
         panel.handleExpand(node);
       },
-
+      // 多选情况下对应节点的值发生改变
       handleMultiCheckChange(checked) {
         this.node.doCheck(checked);
         this.panel.calculateMultiCheckedValue();
@@ -96,9 +96,11 @@
         const { isLeaf, isChecked, config, node } = this;
         const { checkStrictly, multiple, hiddenSelector = [] } = config;
         const { level } = node;
-        if (multiple && !hiddenSelector.includes(level)) {
+        // hiddenSelector 对应的层级不展示单选或多选按钮
+        let hiddenBtn = !hiddenSelector.includes(level)
+        if (multiple && hiddenBtn) {
           return this.renderCheckbox(h);
-        } else if (checkStrictly) {
+        } else if (checkStrictly && hiddenBtn) {
           return this.renderRadio(h);
         } else if (isLeaf && isChecked) {
           return this.renderCheckIcon(h);
@@ -118,7 +120,7 @@
 
         return null;
       },
-
+      // 渲染多选框
       renderCheckbox(h) {
         const { node, config, isDisabled } = this;
         const events = {
@@ -139,7 +141,7 @@
           ></el-checkbox>
         );
       },
-
+      // 渲染单选框
       renderRadio(h) {
         let { checkedValue, value, isDisabled } = this;
 
@@ -191,7 +193,7 @@
         );
       }
     },
-
+    // 组件内容渲染方法
     render(h) {
       const {
         inActivePath,

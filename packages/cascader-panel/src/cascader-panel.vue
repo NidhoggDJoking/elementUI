@@ -335,9 +335,7 @@ export default {
       config.lazyLoad(node, resolve);
     },
 
-    /**
-     * public methods
-    */
+    // cascader-node 节点的多选框： 多选情况下对应节点的值发生改变触发
     calculateMultiCheckedValue() {
       this.checkedValue = this.getCheckedNodes(this.leafOnly)
         .map(node => node.getValueByOption());
